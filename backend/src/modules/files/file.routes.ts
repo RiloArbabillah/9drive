@@ -113,9 +113,7 @@ fileRouter.get('/:id/download', async (req: AuthRequest, res, next) => {
   try {
     const fileId = String(req.params.id)
     const file = await prisma.file.findFirstOrThrow({ where: { id: fileId, userId: req.user!.id }, include: { connectedAccount: true } })
-    res.setHeader('Content-Type', file.mimeType)
-    res.setHeader('Content-Disposition', `attachment; filename="${file.name.replaceAll('"', '')}"`)
-    return streamGoogleFile(file, req.headers.range, res)
+    return streamGoogleFile(file, req.headers.range, res, { disposition: 'attachment' })
   } catch (error) {
     return next(error)
   }
