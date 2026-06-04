@@ -1,0 +1,49 @@
+import { MoreVertical, Star } from 'lucide-react'
+import type { MouseEvent } from 'react'
+import { AvatarStack } from '@/components/drive/AvatarStack'
+import { FileIcon } from '@/components/drive/FileIcon'
+import type { FileItem } from '@/data/drive-data'
+
+export function FileTable({ files, mode = 'default', onFileContextMenu }: { files: FileItem[]; mode?: 'default' | 'shared' | 'recent' | 'starred' | 'archived'; onFileContextMenu?: (event: MouseEvent<HTMLTableRowElement>, file: FileItem) => void }) {
+  return (
+    <div className="mt-5 overflow-x-auto">
+      <table className="w-full min-w-[760px] border-collapse text-left text-sm">
+        <thead>
+          <tr className="border-b border-slate-200 text-slate-950">
+            <th className="w-10 py-4"><input type="checkbox" className="h-4 w-4 accent-blue-600" /></th>
+            <th className="py-4 font-extrabold">Name</th>
+            {mode === 'shared' ? <th className="py-4 font-extrabold">Owner</th> : null}
+            {mode === 'recent' ? <th className="py-4 font-extrabold">Last Opened</th> : null}
+            {mode === 'starred' ? <th className="py-4 font-extrabold">Starred On</th> : null}
+            {mode === 'archived' ? <th className="py-4 font-extrabold">Archived Date</th> : null}
+            {mode === 'archived' ? <th className="py-4 font-extrabold">Original Location</th> : <th className="py-4 font-extrabold">Last Modified</th>}
+            <th className="py-4 font-extrabold">Size</th>
+            <th className="py-4 font-extrabold">Access</th>
+            <th className="py-4" />
+          </tr>
+        </thead>
+        <tbody>
+          {files.map((file) => (
+            <tr key={file.id ?? file.name} onContextMenu={(event) => onFileContextMenu?.(event, file)} className="border-b border-slate-200 transition hover:bg-slate-50">
+              <td className="py-4" />
+              <td className="py-4 font-semibold">
+                <span className="flex items-center gap-3">
+                  {mode === 'starred' ? <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" /> : <FileIcon kind={file.kind} />}
+                  {file.name}
+                </span>
+              </td>
+              {mode === 'shared' ? <td className="py-4 text-slate-500">{file.owner}</td> : null}
+              {mode === 'recent' ? <td className="py-4 text-slate-500">{file.openedDate}</td> : null}
+              {mode === 'starred' ? <td className="py-4 text-slate-500">{file.starredDate}</td> : null}
+              {mode === 'archived' ? <td className="py-4 text-slate-500">{file.archivedDate}</td> : null}
+              <td className="py-4 text-slate-500">{mode === 'archived' ? file.location : file.date}</td>
+              <td className="py-4 text-slate-500">{file.size}</td>
+              <td className="py-4 text-slate-500"><span className="flex items-center gap-3"><AvatarStack count={file.shared} />{file.access}</span></td>
+              <td className="py-4 text-right"><MoreVertical className="ml-auto h-5 w-5 text-slate-500" /></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
