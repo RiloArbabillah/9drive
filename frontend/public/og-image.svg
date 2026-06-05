@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <!-- Background Gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#863bff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5c1fb8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#7e22ce;stop-opacity:0.3" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- Decorative circles -->
+  <circle cx="100" cy="100" r="150" fill="url(#accentGradient)"/>
+  <circle cx="1100" cy="530" r="200" fill="url(#accentGradient)"/>
+  <circle cx="950" cy="50" r="100" fill="url(#accentGradient)"/>
+  
+  <!-- Logo (scaled up favicon) -->
+  <g transform="translate(450, 150)">
+    <path fill="#ffffff" d="M38.919 67.407c-.996 1.268-3.032.563-3.032-1.047V49.906a3.39 3.39 0 0 0-3.393-3.393H15.431c-1.38 0-2.184-1.56-1.38-2.682l11.22-15.707c1.605-2.246 0-5.367-2.763-5.367H1.856c-1.38 0-2.184-1.56-1.38-2.682L11.02.711c.321-.446.834-.711 1.38-.711h43.341c1.38 0 2.184 1.56 1.38 2.682l-11.22 15.707c-1.605 2.247 0 5.369 2.763 5.369h17.066c1.415 0 2.21 1.632 1.335 2.745L38.92 67.408z" style="fill:#ffffff;fill-opacity:1"/>
+    <mask id="a" width="72" height="69" x="0" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha">
+      <path fill="#000" d="M38.763 67.407c-.996 1.267-3.032.563-3.032-1.047V49.906a3.39 3.39 0 0 0-3.393-3.393H15.275c-1.38 0-2.184-1.56-1.38-2.682l11.22-15.707c1.605-2.247 0-5.368-2.763-5.368H1.7c-1.38 0-2.184-1.56-1.38-2.681L10.865.71c.321-.446.834-.711 1.38-.711h43.341c1.38 0 2.184 1.56 1.38 2.682l-11.22 15.707c-1.605 2.247 0 5.367 2.763 5.367h17.066c1.415 0 2.21 1.632 1.335 2.748L38.764 67.408z" style="fill:#000;fill-opacity:1"/>
+    </mask>
+    <g mask="url(#a)">
+      <g filter="url(#b)" opacity="0.4">
+        <ellipse cx="8.262" cy="22.056" fill="#ede6ff" rx="8.262" ry="22.056" style="fill:#ede6ff;fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -6.705 47.274)"/>
+      </g>
+      <g filter="url(#c)" opacity="0.4">
+        <ellipse cx="15.599" cy="44.777" fill="#ede6ff" rx="15.599" ry="44.777" style="fill:#ede6ff;fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -58.992 11.825)"/>
+      </g>
+      <g filter="url(#d)" opacity="0.6">
+        <ellipse cx="8.262" cy="45.731" fill="#c4b5fd" rx="8.262" ry="45.731" style="fill:#c4b5fd;fill-opacity:1" transform="rotate(89.814 -38.87 -21.959)scale(1 -1)"/>
+      </g>
+      <g filter="url(#e)" opacity="0.6">
+        <ellipse cx="8.262" cy="45.899" fill="#c4b5fd" rx="8.262" ry="45.899" style="fill:#c4b5fd;fill-opacity:1" transform="rotate(89.814 -48.966 -5.001)scale(1 -1)"/>
+      </g>
+    </g>
+    <defs>
+      <filter id="b" width="79.112" height="51.524" x="-10.556" y="22.006" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+        <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+        <feGaussianBlur result="effect1_foregroundBlur_1608_7" stdDeviation="10"/>
+      </filter>
+      <filter id="c" width="124.554" height="66.198" x="-33.099" y="11.327" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+        <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+        <feGaussianBlur result="effect1_foregroundBlur_1608_7" stdDeviation="10"/>
+      </filter>
+      <filter id="d" width="126.962" height="51.524" x="-23.731" y="-10.013" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+        <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+        <feGaussianBlur result="effect1_foregroundBlur_1608_7" stdDeviation="10"/>
+      </filter>
+      <filter id="e" width="127.298" height="51.524" x="-33.827" y="6.946" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+        <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+        <feGaussianBlur result="effect1_foregroundBlur_1608_7" stdDeviation="10"/>
+      </filter>
+    </defs>
+  </g>
+  
+  <!-- Title -->
+  <text x="600" y="330" font-family="system-ui, -apple-system, sans-serif" font-size="80" font-weight="800" fill="#ffffff" text-anchor="middle">9Drive</text>
+  
+  <!-- Subtitle -->
+  <text x="600" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="500" fill="#ede6ff" text-anchor="middle">Google Drive Storage Gateway</text>
+  
+  <!-- Description -->
+  <text x="600" y="470" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="400" fill="#c4b5fd" text-anchor="middle">Manage multiple accounts, track quota, upload and share seamlessly</text>
+</svg>
