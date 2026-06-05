@@ -81,6 +81,7 @@ function FolderAppearanceFields({ color, iconUrl, onColorChange, onIconChange }:
 export function AllFilesPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const activeFolderId = searchParams.get('folderId')
+  const searchQuery = searchParams.get('q')?.trim() ?? ''
   const [uploadOpen, setUploadOpen] = useState(false)
   const [folderOpen, setFolderOpen] = useState(false)
   const [renameOpen, setRenameOpen] = useState(false)
@@ -128,7 +129,11 @@ export function AllFilesPage() {
   const previewVideoRef = useRef<HTMLVideoElement | null>(null)
 
   async function loadFiles() {
-    const path = activeFolderId ? `/files?folderId=${activeFolderId}` : '/files'
+    const params = new URLSearchParams()
+    if (activeFolderId) params.set('folderId', activeFolderId)
+    if (searchQuery) params.set('q', searchQuery)
+    const query = params.toString()
+    const path = query ? `/files?${query}` : '/files'
     const data = await apiFetch<{ files: BackendFile[] }>(path)
     setFiles(data.files.map(mapFile))
   }
@@ -150,7 +155,7 @@ export function AllFilesPage() {
   useEffect(() => {
     loadAll().catch((error) => setMessage(error instanceof Error ? error.message : 'Failed to load files'))
     setSelectedFileIds(new Set())
-  }, [activeFolderId])
+  }, [activeFolderId, searchQuery])
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -310,7 +315,7 @@ export function AllFilesPage() {
 
   function openFolder(folder: FolderItem) {
     if (!folder.id) return
-    setSearchParams({ folderId: folder.id })
+    setSearchParams(searchQuery ? { folderId: folder.id, q: searchQuery } : { folderId: folder.id })
   }
 
   function openEmptyContextMenu(event: MouseEvent<HTMLElement>) {
@@ -319,7 +324,7 @@ export function AllFilesPage() {
   }
 
   function closeFolder() {
-    setSearchParams({})
+    setSearchParams(searchQuery ? { q: searchQuery } : {})
   }
 
   async function viewFile() {
@@ -479,7 +484,7 @@ export function AllFilesPage() {
         <div className="flex gap-3"><Button variant={fileViewMode === 'grid' ? 'soft' : 'outline'} size="icon" aria-label="Show files as grid" aria-pressed={fileViewMode === 'grid'} onClick={() => changeFileViewMode('grid')}><LayoutGrid className="h-5 w-5" /></Button><Button variant={fileViewMode === 'list' ? 'soft' : 'outline'} size="icon" aria-label="Show files as list" aria-pressed={fileViewMode === 'list'} onClick={() => changeFileViewMode('list')}><List className="h-5 w-5" /></Button></div>
       </div>
       {cutFolder ? <p className="mt-5 rounded-xl bg-amber-50 p-3 text-sm font-semibold text-amber-700"><ClipboardPaste className="mr-2 inline h-4 w-4" />Cut folder: {cutFolder.name}. Press Ctrl+V or right-click empty area to paste here.</p> : null}
-      {files.length === 0 ? <p className="mt-5 rounded-xl bg-slate-50 p-5 text-sm text-slate-500">{activeFolder ? 'No files in this folder yet.' : 'No uploaded files yet. Connect Google Drive in Settings, then upload a file.'}</p> : fileViewMode === 'grid' ? <FileGrid files={files} selectedFileIds={selectedFileIds} onToggleFile={toggleFileSelection} onFileContextMenu={openContext} /> : <FileTable files={files} selectedFileIds={selectedFileIds} allSelected={allVisibleSelected} onToggleFile={toggleFileSelection} onToggleAll={toggleAllVisibleFiles} onFileContextMenu={openContext} />}
+      {files.length === 0 ? <p className="mt-5 rounded-xl bg-slate-50 p-5 text-sm text-slate-500">{searchQuery ? `No files found for "${searchQuery}".` : activeFolder ? 'No files in this folder yet.' : 'No uploaded files yet. Connect Google Drive in Settings, then upload a file.'}</p> : fileViewMode === 'grid' ? <FileGrid files={files} selectedFileIds={selectedFileIds} onToggleFile={toggleFileSelection} onFileContextMenu={openContext} /> : <FileTable files={files} selectedFileIds={selectedFileIds} allSelected={allVisibleSelected} onToggleFile={toggleFileSelection} onToggleAll={toggleAllVisibleFiles} onFileContextMenu={openContext} />}
       </div>
       <EmptyAreaContextMenu x={emptyContextMenu.x} y={emptyContextMenu.y} open={emptyContextMenu.open} canPasteFolder={Boolean(cutFolder)} onClose={() => setEmptyContextMenu({ x: 0, y: 0, open: false })} onUpload={() => { setUploadOpen(true); setEmptyContextMenu({ x: 0, y: 0, open: false }) }} onCreateFolder={() => { setFolderOpen(true); setEmptyContextMenu({ x: 0, y: 0, open: false }) }} onPasteFolder={() => { pasteFolder().catch((error) => setMessage(error instanceof Error ? error.message : 'Failed to paste folder')); setEmptyContextMenu({ x: 0, y: 0, open: false }) }} />
       <FileContextMenu x={contextMenu.x} y={contextMenu.y} file={contextMenu.file} onClose={() => setContextMenu({ x: 0, y: 0, file: null })} onView={viewFile} onDownload={downloadFile} onRename={() => { setRenameValue(activeFile?.name ?? ''); setRenameOpen(true); setContextMenu({ x: 0, y: 0, file: null }) }} onMove={() => { setMoveOpen(true); setContextMenu({ x: 0, y: 0, file: null }) }} onDetails={() => { setDetailOpen(true); setContextMenu({ x: 0, y: 0, file: null }) }} onShare={shareFile} onInvite={inviteToFile} onDelete={() => { setDeleteOpen(true); setContextMenu({ x: 0, y: 0, file: null }) }} />

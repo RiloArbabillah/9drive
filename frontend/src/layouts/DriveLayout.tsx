@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { type FormEvent, useEffect, useState } from 'react'
+import { NavLink, Outlet, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import {
   Bell,
   FileArchive,
@@ -113,7 +113,10 @@ function Sidebar({ onNavigate, user, storage, breakdown, onLogout }: { onNavigat
 
 export function DriveLayout() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const [searchParams] = useSearchParams()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [searchValue, setSearchValue] = useState(searchParams.get('q') ?? '')
   const [user, setUser] = useState<AuthUser | null>(getStoredUser())
   const [storage, setStorage] = useState<StorageSummary | null>(null)
   const [breakdown, setBreakdown] = useState<StorageBreakdown>({ photo: '0', video: '0', document: '0' })
@@ -123,6 +126,25 @@ export function DriveLayout() {
       apiFetch<StorageSummary>('/storage/summary').then(setStorage),
       apiFetch<StorageBreakdown>('/storage/breakdown').then(setBreakdown),
     ])
+  }
+
+  useEffect(() => {
+    setSearchValue(searchParams.get('q') ?? '')
+  }, [searchParams])
+
+  async function logout() {
+    await apiFetch('/auth/logout', { method: 'POST' }).catch(() => undefined)
+    clearAuthSession()
+    navigate('/login')
+  }
+
+  function searchFiles(event: FormEvent) {
+    event.preventDefault()
+    const nextParams = new URLSearchParams(location.pathname === '/all-files' ? searchParams : undefined)
+    const query = searchValue.trim()
+    if (query) nextParams.set('q', query)
+    else nextParams.delete('q')
+    navigate({ pathname: '/all-files', search: nextParams.toString() })
   }
 
   useEffect(() => {
@@ -136,12 +158,6 @@ export function DriveLayout() {
     window.addEventListener('9drive:storage-changed', loadSidebarStats)
     return () => window.removeEventListener('9drive:storage-changed', loadSidebarStats)
   }, [])
-
-  async function logout() {
-    await apiFetch('/auth/logout', { method: 'POST' }).catch(() => undefined)
-    clearAuthSession()
-    navigate('/login')
-  }
 
   return (
     <main className="min-h-screen w-full overflow-x-hidden bg-white">
@@ -172,11 +188,11 @@ export function DriveLayout() {
               </div>
               <Button variant="outline" size="icon" aria-label="Notifications"><Bell className="h-5 w-5" /></Button>
             </div>
-            <div className="relative w-full min-w-0 flex-1 xl:max-w-xl">
+            <form onSubmit={searchFiles} className="relative w-full min-w-0 flex-1 xl:max-w-xl">
               <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-500" />
-              <Input placeholder="Search Folder, Document, Etc" className="pl-11 pr-12" />
-              <SlidersHorizontal className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-500" />
-            </div>
+              <Input value={searchValue} onChange={(event) => setSearchValue(event.target.value)} placeholder="Search Documents" className="pl-11 pr-12" />
+              <button type="submit" className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500" aria-label="Search files"><SlidersHorizontal className="h-5 w-5" /></button>
+            </form>
             <div className="hidden flex-wrap gap-3 lg:flex">
               <Button variant="outline" size="icon" aria-label="Notifications"><Bell className="h-5 w-5" /></Button>
             </div>
