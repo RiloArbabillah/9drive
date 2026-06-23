@@ -1,6 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="9Drive">
-  <rect width="512" height="512" fill="#2563eb"/>
-  <circle cx="256" cy="256" r="214" fill="#1d4ed8"/>
-  <path fill="#fff" d="M256 88c69 0 124 52 124 116 0 92-84 160-207 222-17 8-35-10-26-28l54-102c-45-19-69-54-69-92 0-64 55-116 124-116Zm0 62c-32 0-58 24-58 54s26 54 58 54 58-24 58-54-26-54-58-54Z"/>
-  <path fill="#bfdbfe" d="M305 314c-20 11-43 22-71 36l-19 35c65-34 115-70 144-111-14 14-33 26-54 40Z"/>
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="#0f172a"/>
+  <text x="256" y="370" font-family="'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="340" font-weight="900" fill="url(#g)" text-anchor="middle">9</text>
+  <path d="M320 120c22 0 42 9 56 24s22 36 22 57c0 42-34 76-76 76H160c-33 0-60-27-60-60s27-60 60-60c8 0 16 2 23 5" fill="none" stroke="url(#g)" stroke-width="16" stroke-linecap="round" opacity="0.7"/>
 </svg>
