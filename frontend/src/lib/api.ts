@@ -1,6 +1,6 @@
 import { clearAuthSession, getAccessToken, getRefreshToken, setAccessToken } from '@/lib/auth'
 
-export const API_URL = ''
+export const API_URL = import.meta.env.VITE_API_URL ?? ''
 
 type ApiOptions = RequestInit & { skipAuth?: boolean; retry?: boolean }
 
