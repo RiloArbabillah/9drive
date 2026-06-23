@@ -2,13 +2,13 @@ FROM node:20-alpine AS base
 
 WORKDIR /app
 
-COPY package*.json ./
-COPY prisma ./prisma
+COPY backend/package*.json ./
+COPY backend/prisma ./prisma
 
 RUN npm ci
 
-COPY tsconfig.json ./
-COPY src ./src
+COPY backend/tsconfig.json ./
+COPY backend/src ./src
 
 RUN npm run build && npx prisma generate
 
